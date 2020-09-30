@@ -7,6 +7,7 @@ library(RcppAlgos)
 library(tidyverse)
 library(caret)
 library(leaps)
+library("reticulate")
 
 # Fit the full model 
 default_data<-data.frame(Class=y,default_data)
@@ -221,3 +222,16 @@ res_b
 confusionMatrix(data = pred_b, reference = default_data[,1])
 
 
+#interpretation
+library("tidyrules")
+library("dplyr")
+library("pander")
+rules_r <- tidyRules(fit.r)
+print(rules_r)
+print(rules_r[2])
+
+
+use_python("C:/Users/fredx/Anaconda3",required=T)
+source_python("Source_EA.py")
+C = DecisionTree_EA()
+tree_from_r(rules_r)
